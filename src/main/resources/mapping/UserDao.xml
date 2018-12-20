@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.src.Dao.UserDao">
+
+	<!-- 根据ID查询用户 -->
+	<select id="selectOne" parameterType="long" resultType="com.example.src.Po.User" >
+		select au.id, au.login_name, au.user_name, au.avatar, au.register_time, 
+		au.is_enable, au.removed, au.phone,ar.id rid,ar.name rname 
+		from admin_user au left join 
+		(select aur.uid,ar.id,ar.name from admin_user_role aur left join admin_role ar on aur.rid = ar.id) ar
+		on au.id = ar.uid
+		where au.id = #{id}
+		LIMIT 0,1
+	</select>
+
+</mapper>
